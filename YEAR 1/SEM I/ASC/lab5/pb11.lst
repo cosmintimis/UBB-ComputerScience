@@ -1,0 +1,56 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll                       ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      
+    14                                      ;s db 1, 5, 3, 8, 2, 9
+    15 00000000 313533383239                s db '153829'
+    16                                      len equ $ - s
+    17 00000006 <res 00000006>              d1 resb len
+    18 0000000C <res 00000006>              d2 resb len
+    19                                      ; ...
+    20                                      ; A byte string S is given. Obtain the string D1 which contains all the even numbers of S and the string D2 which contains all the odd numbers of S.
+    21                                      ;S: 1, 5, 3, 8, 2, 9
+    22                                      ;D1: 8, 2
+    23                                      ;D2: 1, 5, 3, 9
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ; ...
+    29 00000000 B906000000                      mov ecx, len
+    30 00000005 BE[00000000]                    mov esi, s
+    31 0000000A BF[06000000]                    mov edi, d1
+    32 0000000F BA[0C000000]                    mov edx, d2
+    33                                          
+    34 00000014 E311                            jecxz skip
+    35                                          
+    36                                          my_loop:
+    37 00000016 8A06                                mov al, [esi]
+    38 00000018 46                                  inc esi
+    39 00000019 A801                                test al, 1
+    40 0000001B 7405                                jz is_even
+    41 0000001D 8802                                mov [edx], al ; odd
+    42 0000001F 42                                  inc edx
+    43 00000020 EB03                                jmp skip_is_even
+    44                                              is_even:
+    45 00000022 8807                                    mov [edi], al
+    46 00000024 47                                      inc edi
+    47                                              
+    48                                              skip_is_even:
+    49                                          
+    50 00000025 E2EF                            loop my_loop
+    51                                          
+    52                                          
+    53                                          skip:
+    54                                          ; exit(0)
+    55 00000027 6A00                            push    dword 0     
+    56 00000029 FF15[00000000]                  call    [exit]      
