@@ -1,0 +1,139 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  import exit msvcrt.dll
+     8                                  import printf msvcrt.dll
+     9                                  extern exit, printf               
+    10                                  
+    11                                      ;; subiectu IV (Arhiva asc - EXAM ex2.jpg)
+    12                                                         
+    13                                                         
+    14                                  segment data use32 class=data
+    15 00000000 25640A00                    format db "%d",10, 0
+    16 00000004 25732000                    format2 db "%s",32, 0
+    17 00000008 770000000000000000-         sir dq 1110111b, 100000000h, 0ABCD0002E7FCh, 5
+    17 00000011 00000001000000FCE7-
+    17 0000001A 0200CDAB0000050000-
+    17 00000023 0000000000         
+    18                                      len equ ($-sir)/8
+    19 00000028 <res 00000010>              rez resd len
+    20 00000038 00000000                    len2 dd 0
+    21 0000003C 00<rept>                    numberBase2 times 33 db 0
+    22 0000005D 00<rept>                    numberBase2bun times 33 db 0
+    23                                      
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ; ...
+    29                                          
+    30 00000000 B904000000                      mov ecx, len
+    31 00000005 E302                            jecxz .endd
+    32                                          
+    33 00000007 EB05                            jmp .tesuneu
+    34                                          .endd:
+    35 00000009 E9AF000000                          jmp .end
+    36                                          .tesuneu:
+    37 0000000E BE[08000000]                    mov esi, sir
+    38 00000013 BF[28000000]                    mov edi, rez
+    39                                          
+    40                                          .loop:
+    41 00000018 BA00000000                          mov edx, 0
+    42 0000001D 8B1E                                mov ebx, [esi]
+    43 0000001F 51                                  push ecx
+    44 00000020 B920000000                          mov ecx, 32
+    45 00000025 31C0                                xor eax, eax
+    46                                              .loop2:
+    47 00000027 F7C301000000                            test ebx, 1
+    48 0000002D 7502                                    jnz .one
+    49                                                  
+    50                                                  
+    51 0000002F EB07                                    jmp .reset
+    52                                                  .one:
+    53 00000031 40                                         inc eax
+    54 00000032 83F803                                     cmp eax, 3
+    55 00000035 7503                                       jne .skip
+    56 00000037 42                                         inc edx
+    57                                                  
+    58                                                  .reset:
+    59 00000038 31C0                                        xor eax, eax  
+    60                                                  .skip:
+    61                                                  
+    62 0000003A D1EB                                    shr ebx, 1
+    63 0000003C E2E9                                    loop .loop2
+    64 0000003E 59                                  pop ecx
+    65                                    
+    66 0000003F 83FA02                              cmp edx, 2
+    67 00000042 7302                                jae .good2
+    68                                              
+    69 00000044 EB0E                                jmp .skip2
+    70                                              .good2:
+    71 00000046 8B1E                                   mov ebx, [esi]
+    72 00000048 891F                                   mov [edi], ebx
+    73 0000004A 83C704                                 add edi, 4
+    74 0000004D 8305[38000000]01                       add dword [len2], 1
+    75                                              .skip2:
+    76 00000054 83C608                              add esi, 8
+    77 00000057 E2BF                                loop .loop
+    78                                              
+    79 00000059 8B0D[38000000]                      mov ecx, [len2]
+    80 0000005F E35C                                jecxz .end
+    81                                              
+    82 00000061 BE[28000000]                        mov esi, rez
+    83                                              
+    84                                              .loop3:
+    85 00000066 BB02000000                              mov ebx, 2
+    86 0000006B BF[3C000000]                            mov edi, numberBase2
+    87 00000070 8B06                                    mov eax, [esi]
+    88 00000072 31D2                                    xor edx, edx
+    89 00000074 51                                      push ecx
+    90                                                  
+    91 00000075 B900000000                              mov ecx, 0
+    92                                                  
+    93                                                  .loop4:
+    94 0000007A F7F3                                        div ebx
+    95 0000007C 80FA01                                      cmp dl, 1
+    96 0000007F 7505                                        jne .putzero
+    97 00000081 C60731                                      mov [edi], byte '1'
+    98 00000084 EB03                                        jmp .tesuneu2
+    99                                                      .putzero:
+   100 00000086 C60730                                          mov [edi], byte '0'
+   101                                                      .tesuneu2:
+   102 00000089 47                                          inc edi
+   103 0000008A 41                                          inc ecx
+   104 0000008B 31D2                                        xor edx, edx
+   105 0000008D 83F800                                      cmp eax, 0
+   106 00000090 75E8                                        jnz .loop4
+   107                                                     
+   108 00000092 4F                                      dec edi
+   109 00000093 56                                      push esi
+   110 00000094 BE[5D000000]                            mov esi, numberBase2bun
+   111                                                  .loop5:
+   112 00000099 8A1F                                        mov bl, [edi]
+   113 0000009B 881E                                        mov [esi], bl
+   114 0000009D 4F                                          dec edi
+   115 0000009E 46                                          inc esi
+   116 0000009F E2F8                                        loop .loop5
+   117                                                   
+   118 000000A1 5E                                      pop esi                 
+   119 000000A2 59                                      pop ecx
+   120                                  
+   121 000000A3 60                                      pushad
+   122 000000A4 68[5D000000]                            push numberBase2bun
+   123 000000A9 68[04000000]                            push format2
+   124 000000AE FF15[00000000]                          call [printf]
+   125 000000B4 83C408                                  add esp, 8
+   126 000000B7 61                                      popad
+   127                                                      
+   128 000000B8 83C604                                  add esi, 4
+   129                                                  
+   130 000000BB E2A9                                    loop .loop3
+   131                                          
+   132                                          .end:
+   133                                      
+   134                                          ; exit(0)
+   135 000000BD 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   136 000000BF FF15[00000000]                  call    [exit]       ; call exit to terminate the program

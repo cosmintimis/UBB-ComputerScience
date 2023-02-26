@@ -1,0 +1,113 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fread, printf, gets, fprintf, fwrite              ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll                        ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fread msvcrt.dll 
+    11                                  import fclose msvcrt.dll
+    12                                  import printf msvcrt.dll
+    13                                  import gets msvcrt.dll 
+    14                                  import fprintf msvcrt.dll
+    15                                  import fwrite msvcrt.dll                            ;A text file is given. Read the content of the file, determine the lowercase letter with the highest frequency and display the letter along with its frequency on t
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18                                      ; ...
+    19 00000000 7200                        modd db "r", 0
+    20 00000002 642E74787400                fileName db "d.txt", 0
+    21 00000008 FFFFFFFF                    fd dd -1
+    22 0000000C 616263646566676869-         table db 'abcdefghijklmnopqrstuvwxyz'
+    22 00000015 6A6B6C6D6E6F707172-
+    22 0000001E 737475767778797A   
+    23 00000026 00                          max db 0
+    24 00000027 00                          charmax db 0
+    25 00000028 257300                      format1 db "%s", 0
+    26 0000002B <res 00000064>              string resb 100
+    27 0000008F 00<rept>                    d times 26 db 0
+    28 000000A9 25640A00                    format db "%d",10, 0
+    29 000000AD 25633A20256400              format2 db "%c: %d", 0
+    30                                  ; our code starts here
+    31                                  segment code use32 class=code
+    32                                      start:
+    33                                          ; ...
+    34                                                 
+    35                                          
+    36 00000000 68[00000000]                    push modd
+    37 00000005 68[02000000]                    push fileName
+    38 0000000A FF15[00000000]                  call [fopen]
+    39 00000010 83C408                          add esp, 8
+    40                                          
+    41                                          
+    42                                          
+    43 00000013 83F800                          cmp eax, 0
+    44 00000016 0F848D000000                    je .end
+    45 0000001C A3[08000000]                    mov [fd], eax
+    46                                          
+    47                                          
+    48 00000021 FF35[08000000]                  push dword [fd]
+    49 00000027 6A64                            push 100
+    50 00000029 6A01                            push 1
+    51 0000002B 68[2B000000]                    push string
+    52 00000030 FF15[00000000]                  call [fread]
+    53 00000036 83C410                          add esp, 16
+    54 00000039 89C1                            mov ecx, eax
+    55 0000003B BE[2B000000]                    mov esi, string
+    56 00000040 BF[0C000000]                    mov edi, table
+    57 00000045 BA[8F000000]                    mov edx, d
+    58                                          
+    59                                          .loop:
+    60 0000004A 51                                  push ecx
+    61 0000004B B91A000000                          mov ecx, 26
+    62                                              .loop2:
+    63 00000050 8A440FFF                                mov al, byte [edi + ecx - 1]
+    64 00000054 3806                                    cmp byte [esi], al
+    65 00000056 7404                                    je .found
+    66 00000058 E2F6                                    loop .loop2
+    67 0000005A EB1F                                jmp .skip
+    68                                              .found:
+    69 0000005C 80440AFF01                              add byte [edx + ecx - 1], 1
+    70 00000061 8A440AFF                                mov al, byte [edx + ecx - 1]
+    71 00000065 3A05[26000000]                          cmp al, [max]
+    72 0000006B 7700                                    ja .newmax
+    73                                                  
+    74                                                  .newmax:
+    75 0000006D A2[26000000]                                mov [max], al
+    76 00000072 8A440FFF                                    mov al, byte [edi + ecx - 1]
+    77 00000076 A2[27000000]                                mov [charmax], al
+    78                                              .skip:
+    79 0000007B 59                                  pop ecx
+    80 0000007C 46                                  inc esi
+    81 0000007D E2CB                                loop .loop
+    82                                  
+    83                                             
+    84                                          ;xor ebx, ebx
+    85                                         ; mov bl, [max]
+    86 0000007F F8                             clc
+    87 00000080 BB00000000                      mov ebx, 0FFFFFFFFh << 33
+    87          ******************       warning: dword data exceeds bounds [-w+number-overflow]
+    88                                         
+    89                                           
+    90                                          
+    91 00000085 A0[27000000]                    mov al, [charmax]
+    92                                          
+    93 0000008A 53                              push ebx
+    94 0000008B 50                              push eax
+    95 0000008C 68[AD000000]                    push format2
+    96 00000091 FF15[00000000]                  call [printf]
+    97 00000097 83C408                          add esp, 8
+    98                                          
+    99                                              
+   100                                          
+   101 0000009A FF35[08000000]                  push dword [fd]
+   102 000000A0 FF15[00000000]                  call [fclose]
+   103 000000A6 83C404                          add esp, 4
+   104                                          
+   105                                          
+   106                                          .end:
+   107                                          
+   108                                          ; exit(0)
+   109 000000A9 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   110 000000AB FF15[00000000]                  call    [exit]       ; call exit to terminate the program

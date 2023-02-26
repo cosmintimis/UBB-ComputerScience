@@ -1,0 +1,79 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  import scanf msvcrt.dll                         ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    11                                                            
+    12                                                            
+    13                                                            
+    14                                                            ; Read one byte and one word from the keyboard. Print on the screen "YES" if the bits of the byte read are found consecutively among the bits of the word and "NO" otherwise.
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18                                      ; ...
+    19 00000000 59455300                    msg1 db "YES", 0
+    20 00000004 4E4F00                      msg2 db "NO", 0
+    21 00000007 456E74657220286279-         msg3 db "Enter (byte)a: ", 0
+    21 00000010 746529613A2000     
+    22 00000017 456E7465722028776F-         msg4 db "Enter (word)b: ", 0
+    22 00000020 726429623A2000     
+    23 00000027 25686400                    format db "%hd", 0
+    24 0000002B 257300                      format2 db "%s", 0
+    25 0000002E <res 00000001>              a resb 1
+    26 0000002F <res 00000002>              b resw 1
+    27                                  
+    28                                  ; our code starts here
+    29                                  segment code use32 class=code
+    30                                      start:
+    31                                          ; ...
+    32                                          
+    33 00000000 68[07000000]                    push msg3
+    34 00000005 FF15[00000000]                  call [printf]
+    35 0000000B 83C404                          add esp, 4
+    36                                          
+    37 0000000E 68[2E000000]                    push a
+    38 00000013 68[27000000]                    push format
+    39 00000018 FF15[00000000]                  call [scanf]
+    40 0000001E 83C408                          add esp, 8
+    41                                          
+    42                                          
+    43 00000021 68[17000000]                    push msg4
+    44 00000026 FF15[00000000]                  call [printf]
+    45 0000002C 83C404                          add esp, 4
+    46                                          
+    47 0000002F 68[2F000000]                    push b
+    48 00000034 68[27000000]                    push format
+    49 00000039 FF15[00000000]                  call [scanf]
+    50 0000003F 83C408                          add esp, 8
+    51                                          
+    52 00000042 66A1[2F000000]                  mov ax, [b]
+    53                                          
+    54 00000048 B908000000                      mov ecx, 8
+    55                                          
+    56                                          .loop:
+    57 0000004D 3A05[2E000000]                      cmp al, [a]
+    58 00000053 7407                                je .good
+    59 00000055 66D1E8                              shr ax, 1
+    60 00000058 E2F3                                loop .loop
+    61                                              
+    62                                          
+    63 0000005A EB10                            jmp .notgood
+    64                                          .good:
+    65 0000005C 68[00000000]                        push msg1
+    66 00000061 FF15[00000000]                      call [printf]
+    67 00000067 83C404                              add esp, 4
+    68 0000006A EB0E                            jmp .end
+    69                                          .notgood:
+    70 0000006C 68[04000000]                        push msg2
+    71 00000071 FF15[00000000]                      call [printf]
+    72 00000077 83C404                              add esp, 4
+    73                                          
+    74                                          .end:
+    75                                          ; exit(0)
+    76 0000007A 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    77 0000007C FF15[00000000]                  call    [exit]       ; call exit to terminate the program

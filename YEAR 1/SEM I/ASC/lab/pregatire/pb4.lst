@@ -1,0 +1,74 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fwrite, fprintf, printf              ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import fopen msvcrt.dll                          ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fclose msvcrt.dll 
+    11                                  import fprintf msvcrt.dll
+    12                                  import fwrite msvcrt.dll    
+    13                                  import printf msvcrt.dll                         ;A file name and a hexadecimal number (on 16 bits) are given. Create a file with the given name and write each nibble composing the hexadecimal number on a different 
+    14                                                            
+    15                                  
+    16                                                            
+    17                                  ; our data is declared here (the variables needed by our program)
+    18                                  segment data use32 class=data
+    19                                      ; ...
+    20 00000000 CDAB                        number dw 0ABCDh
+    21 00000002 646174652E74787400          fileName db "date.txt", 0
+    22 0000000B 7700                        modd db "w", 0
+    23 0000000D FFFFFFFF                    fd dd -1
+    24 00000011 <res 00000004>              d resb 4
+    25 00000015 25580A00                    format1 db "%X", 10, 0
+    26                                  
+    27                                  ; our code starts here
+    28                                  segment code use32 class=code
+    29                                      start:
+    30                                          ; ...
+    31 00000000 68[0B000000]                    push modd
+    32 00000005 68[02000000]                    push fileName
+    33 0000000A FF15[00000000]                  call [fopen]
+    34 00000010 83C408                          add esp, 8
+    35                                          
+    36 00000013 83F800                          cmp eax, 0
+    37 00000016 7451                            je .end
+    38                                          
+    39 00000018 A3[0D000000]                    mov [fd], eax
+    40                                          
+    41                                          
+    42 0000001D 66A1[00000000]                  mov ax, [number]
+    43 00000023 BB00000000                      mov ebx, 0
+    44 00000028 B30F                            mov bl, 00001111b
+    45 0000002A B904000000                      mov ecx, 4
+    46 0000002F BE[11000000]                    mov esi, d
+    47                                          
+    48                                          .loop:
+    49 00000034 20C3                                and bl, al
+    50 00000036 881E                                mov [esi], bl
+    51 00000038 46                                  inc esi
+    52 00000039 89DA                                mov edx, ebx
+    53 0000003B 60                                  pushad
+    54 0000003C 52                                  push edx
+    55 0000003D 68[15000000]                        push format1
+    56 00000042 FF35[0D000000]                      push dword [fd]
+    57 00000048 FF15[00000000]                      call [fprintf]
+    58 0000004E 83C40C                              add esp, 12
+    59 00000051 61                                  popad
+    60 00000052 66C1E804                            shr ax, 4
+    61 00000056 B30F                                mov bl, 00001111b
+    62 00000058 E2DA                                loop .loop
+    63                                          
+    64                                  
+    65                                          
+    66 0000005A FF35[0D000000]                  push dword [fd]
+    67 00000060 FF15[00000000]                  call [fclose]
+    68 00000066 83C404                          add esp, 4
+    69                                      
+    70                                      
+    71                                          .end:
+    72                                          ; exit(0)
+    73 00000069 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    74 0000006B FF15[00000000]                  call    [exit]       ; call exit to terminate the program

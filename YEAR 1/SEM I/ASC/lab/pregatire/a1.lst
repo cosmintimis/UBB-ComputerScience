@@ -1,0 +1,48 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit,printf, myFunction               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                  import printf msvcrt.dll                          ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ; ...
+    14 00000000 FFFFFFFF40E20100FF-         sir dd -1,123456, 0xabcdeff, 0xabcdeff, 0xcbcdeff, 0xdbcdeff, 0111010101b
+    14 00000009 DEBC0AFFDEBC0AFFDE-
+    14 00000012 BC0CFFDEBC0DD50100-
+    14 0000001B 00                 
+    15                                      len equ ($-sir)/4
+    16 0000001C <res 0000001C>              sirfinal resd len
+    17 00000038 25640A00                    format db "%d",10,0
+    18 0000003C 25580A00                    format2 db "%X",10,0
+    19                                  ; our code starts here
+    20                                  segment code use32 class=code
+    21                                      start:
+    22                                          ; ...
+    23                                          
+    24 00000000 6A07                            push len
+    25 00000002 68[1C000000]                    push sirfinal
+    26 00000007 68[00000000]                    push sir
+    27 0000000C E8(00000000)                    call myFunction
+    28 00000011 83C40C                          add esp, 12
+    29                                          
+    30                                          
+    31 00000014 BE[20000000]                    mov esi, sirfinal + 4
+    32 00000019 B906000000                      mov ecx, len - 1
+    33 0000001E E300                            jecxz .final
+    34                                          
+    35                                          .loop1:
+    36                                              
+    37                                          
+    38                                          
+    39                                          
+    40                                          .final:
+    41                                          
+    42                                      
+    43                                          ; exit(0)
+    44 00000020 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    45 00000022 FF15[00000000]                  call    [exit]       ; call exit to terminate the program
