@@ -1,0 +1,40 @@
+package model.statements;
+
+import exceptions.MyException;
+import model.ProgramState;
+import model.adt.*;
+import model.types.IType;
+import model.values.IValue;
+import model.values.StringValue;
+
+import java.io.BufferedReader;
+
+public class ForkStmt implements IStmt{
+    IStmt statement;
+
+    public ForkStmt(IStmt statement){
+        this.statement = statement;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "fork{" + this.statement.toString() + "};";
+    }
+
+    @Override
+    public ProgramState execute(ProgramState state) throws MyException {
+
+        MyIHeap heap = state.getHeap();
+        MyIDictionary<String, IValue> symTable = state.getSymTable().copy();
+        MyIList<IValue> outputList = state.getOutputList();
+        MyIDictionary<StringValue, BufferedReader> fileTable = state.getFileTable();
+
+        return new ProgramState(new MyStack<>(), symTable, outputList, fileTable, heap, this.statement);
+    }
+
+    @Override
+    public IStmt deepcopy() {
+        return new ForkStmt(statement.deepcopy());
+    }
+}
