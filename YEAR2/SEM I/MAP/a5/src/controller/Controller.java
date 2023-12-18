@@ -74,10 +74,14 @@ public class Controller {
                 .toList();
 
         ProgramState firstProgram = programStatesList.get(0);
-        List<Integer> addressesToKeep = Stream.concat(
-                getAddresses(firstProgram.getSymTable().getContent().values()).stream(),
-                getAddresses(firstProgram.getHeap().getContent().values()).stream()
-        ).toList();
+        List<Integer> availableAddressesFromHeap = getAddresses(firstProgram.getHeap().getContent().values());
+        List<Integer> addressesToKeep = getAddresses(firstProgram.getSymTable().getContent().values());
+        for (int index = 1; index < programStatesList.size(); index ++) {
+            ProgramState programState = programStatesList.get(index);
+            List<Integer> availableAddressesFromSymTable = getAddresses(programState.getSymTable().getContent().values());
+            addressesToKeep.addAll(availableAddressesFromSymTable);
+        }
+        addressesToKeep.addAll(availableAddressesFromHeap);
         firstProgram.getHeap().setContent(garbageCollector(addressesToKeep, firstProgram.getHeap().getContent()));
 
         programStatesList.addAll(newProgramStatesList);
@@ -95,12 +99,6 @@ public class Controller {
         List<ProgramState> programStatesList = removeCompletedPrograms(repository.getCurrentProgramStatesList());
 
         while (!programStatesList.isEmpty()) {
-//            ProgramState firstProgram = programStatesList.get(0);
-//            List<Integer> addressesToKeep = Stream.concat(
-//                    getAddresses(firstProgram.getSymTable().getContent().values()).stream(),
-//                    getAddresses(firstProgram.getHeap().getContent().values()).stream()
-//            ).toList();
-//            firstProgram.getHeap().setContent(garbageCollector(addressesToKeep, firstProgram.getHeap().getContent()));
             oneStepForAllPrograms(programStatesList);
             programStatesList = removeCompletedPrograms(repository.getCurrentProgramStatesList());
         }
