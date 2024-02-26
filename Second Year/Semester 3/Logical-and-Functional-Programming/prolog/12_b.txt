@@ -1,0 +1,15 @@
+length1([], 0).
+length1([_|T], C) :-
+    length1(T, C1),
+    C is C1 + 1.
+
+removeN([_ | T], 1, T).
+removeN([H | T] , N, [H | R]) :-
+    NN is N - 1,
+    removeN(T, NN, R).
+
+
+removeNMain(L, N, R) :-
+    length1(L, C),
+    N =< C,
+    removeN(L, N , R).

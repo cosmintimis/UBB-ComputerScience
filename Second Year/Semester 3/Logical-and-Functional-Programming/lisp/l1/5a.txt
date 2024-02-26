@@ -1,0 +1,11 @@
+(defun writeTwiceNthElement (l k)
+        (cond
+            ((null l) NIL)
+            ((zerop k) l)
+            ((> k 1) (cons (car l) (writeTwiceNthElement (cdr l) (- k 1)) ))
+            (T (cons (car l) (cons (car l) (writeTwiceNthElement (cdr l) (- k 1) ))))
+        )
+)
+    
+    
+(print (writeTwiceNthElement '(10 20 30 40 50) 3))

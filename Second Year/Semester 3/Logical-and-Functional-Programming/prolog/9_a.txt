@@ -1,0 +1,5 @@
+insertN([H|T], 1, E, [E, H | T]).
+insertN([H|T], N, E, [H | R]) :-
+    N1 is N - 1,
+    insertN(T, N1, E, R).
+    

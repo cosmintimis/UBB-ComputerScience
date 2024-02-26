@@ -1,0 +1,23 @@
+is_member([H|_], H).
+is_member([_|T], E) :-
+    is_member(T, E).
+
+
+union([],L,L).
+union([H|T], L, R) :-
+    is_member(L, H), !,
+    union(T, L, R).
+union([H|T], L, [H |R]) :-
+    union(T, L, R).
+
+
+pair([H|_], E, [E, H]).
+pair([_ | T], E,  R) :-
+    pair(T, E, R).
+
+pairs([H|T], X) :-
+    pair(T, H, X).
+pairs([_|T], X) :-
+      pairs(T, X).
+   
+findall(X,pairs([2,3,4,5], X),R).

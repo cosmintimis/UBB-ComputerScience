@@ -1,0 +1,14 @@
+gcd(R, 0, R).
+gcd(A, B, R) :-
+    BB is A mod B,
+    gcd(B, BB, R), !.
+
+
+gcdList([], R, R).
+gcdList([H|T], G, R) :- 
+    gcd(H, G, GG),
+    gcdList(T, GG, R).
+gcdListMain([H1, H2|T], R) :-
+    gcd(H1, H2, G),
+    gcdList(T, G, R).
+    

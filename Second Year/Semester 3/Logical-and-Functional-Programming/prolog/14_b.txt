@@ -1,0 +1,13 @@
+length1([], 0).
+length1([_|T], C) :-
+    length1(T, C1),
+    C is C1 + 1.
+
+selectN([H | _], 1, H).
+selectN([H | T], N, E) :-
+    length1([H|T], C),
+    N =< C,
+    N1 is N - 1,
+    selectN(T, N1, E).
+    
+    

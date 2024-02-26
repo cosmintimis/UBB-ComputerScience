@@ -1,0 +1,20 @@
+is_member([H|_], H).
+is_member([_|T], E) :-
+    is_member(T, E).
+
+addToEnd(E, [], [E]).
+addToEnd(E, [H | T], [H |R]) :-
+    addToEnd(E, T, R).
+    
+
+transformListToSet([], C, C).
+transformListToSet([H|T], C, R) :-
+    \+ is_member(C, H),
+    addToEnd(H, C, C1),
+    transformListToSet(T, C1, R).
+transformListToSet([_|T] ,C,R) :-
+    transformListToSet(T, C, R).
+                   
+      
+transformListToSetMain(L, R) :-
+    transformListToSet(L, [], R).

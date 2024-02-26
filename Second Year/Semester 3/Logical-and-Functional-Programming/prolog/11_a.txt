@@ -1,0 +1,8 @@
+substitute2([], _, _, []).
+
+substitute2([H | T], H, E2, [E2 | R]) :-
+    substitute2(T, H, E2, R), !.
+substitute2([H | T], E1, H, [E1 | R]) :-
+    substitute2(T, E1, H, R), !.
+substitute2([H | T], E1, E2, [H | R]) :-
+    substitute2(T, E1, E2, R).

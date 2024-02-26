@@ -1,0 +1,7 @@
+
+substitute([H | T], H, [], T).
+substitute([H | T], H, [H1 | L], [H1 | R]) :-
+    substitute([H | T], H, L, R).
+substitute([H | T], E, L, [H |R]) :-
+    substitute(T, E, L, R).
+    

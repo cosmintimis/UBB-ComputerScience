@@ -1,0 +1,14 @@
+;numberOfAllNumericalAtoms(l1..ln)=
+; 0, if n = 0
+; 1 + numberOfAllNumericalAtoms(l2..ln), if l1 is number
+; numberOfAllNumericalAtoms(l2..ln), otherwise
+
+(defun numberOfAllNumericalAtoms (l)
+  (cond
+    ((null l) 0)
+    ((numberp (car l)) 
+     (+ 1 (numberOfAllNumericalAtoms (cdr l))))
+    (t (numberOfAllNumericalAtoms (cdr l))))
+)
+
+(print (numberOfAllNumericalAtoms '(1.2 a 2 '(2 3))))

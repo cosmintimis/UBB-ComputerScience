@@ -1,0 +1,17 @@
+noOfOccurrences([], _, 0).
+noOfOccurrences([H | T], H , C) :-
+    noOfOccurrences(T, H, C1), !,
+     C is C1 + 1.
+noOfOccurrences([_ | T], E , C) :-
+    noOfOccurrences(T, E, C).
+
+removeAll([], _, _, []).
+removeAll([H | T], E, C, [H |R]) :-
+    H =\= E,
+    removeAll(T, E, C, R).
+removeAll([H | T], H, C, R) :-
+    C < 3,
+    C1 is C + 1,
+    removeAll(T, H, C1, R).
+removeAll([H | T], H, C, [H |R]) :-
+    removeAll(T, H, C, R).

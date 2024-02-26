@@ -49,6 +49,21 @@ My University Journey
 <ul>
   <li>3<sup>rd</sup> Semester</li>
   <ul>
+   <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%203/Advanced-Programming-Methods">Advanced Programming Methods</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%203/Computer-Networks">Computer Networks</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%203/Databases">Databases</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%203/Logical-and-Functional-Programming">Logical and Functional Programming</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%203/Probabilities-and-Statistics">Probabilities and Statistics</a>
+    </li>
     
   </ul>
   <li>4<sup>th</sup> Semester</li>

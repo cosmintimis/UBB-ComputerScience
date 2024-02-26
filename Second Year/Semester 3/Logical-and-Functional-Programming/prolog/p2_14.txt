@@ -1,0 +1,44 @@
+length1([],0).
+length1([_|T], C) :-
+    length1(T, C1),
+    C is C1 + 1.
+
+copyList([], []).
+copyList([H | T], [H | R]) :-
+    copyList(T, R).
+  
+
+addToEnd(E, [], [E]).
+addToEnd(E, [H | T], [H |R]) :-
+    addToEnd(E, T, R).
+
+getLast([E], E).
+getLast([_|T], E) :-
+    getLast(T, E).
+
+seq([H | T], C, R, 0, M):-
+    H mod 2 =\= 0,
+    seq(T,C, R, 0, M).
+
+seq([H | T], C, R, N,M):-
+    H mod 2 =\= 0,
+    N > 0,
+    N > M,
+    copyList(C, R),
+    print(R), nl,
+    seq(T,[], R, 0, N).
+
+seq([H | T],C, R, 0, M):-
+    H mod 2 =:= 0,
+    C = [H],
+    seq(T,C, R, 1, M).
+
+
+seq([H | T], C, R, N,M):-
+    N > 0,
+    getLast(C, H2),
+    S is H2 + 2,
+    H =:= S,
+    addToEnd(H, C, C1),
+    N1 is N + 1,
+    seq(T,C1, R, N1, M).

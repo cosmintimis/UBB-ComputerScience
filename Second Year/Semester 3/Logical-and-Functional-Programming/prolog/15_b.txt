@@ -1,0 +1,17 @@
+addToEnd(E, [], [E]).
+addToEnd(E, [H | T], [H |R]) :-
+    addToEnd(E, T, R).
+
+decomposeList([], L, L, 0, 0).
+decomposeList([H | T], R, RR, C1, C2) :-
+    H mod 2 =:= 0,
+    R1 = [H | R],
+    decomposeList(T, R1, RR,C11 ,C2),
+    C1 is C11 + 1.
+
+decomposeList([H | T], R, RR, C1, C2) :-
+    addToEnd(H, R, R1),
+    decomposeList(T, R1, RR, C1, C22),
+    C2 is C22 + 1.
+    
+    

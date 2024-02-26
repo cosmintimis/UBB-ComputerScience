@@ -1,0 +1,21 @@
+length1([], 0).
+length1([_|T], C) :-
+    length1(T, C1),
+    C is C1 + 1.
+
+is_member([H|_], H).
+is_member([_|T], E) :-
+    is_member(T, E).
+
+
+eq([], _).
+eq([H1|T1], L2) :-
+    is_member(L2, H1),
+    eq(T1, L2).
+
+eqMain(L1, L2) :-
+    length1(L1, C1),
+    length1(L2, C2),
+    C1 =:= C2,
+    eq(L1, L2).
+    

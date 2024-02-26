@@ -1,0 +1,11 @@
+sublist([], _, _, [], _).
+sublist([H | T], M, N, [H | L], C) :-
+    C >= M,
+    C =< N,
+    C1 is C + 1, !,
+    sublist(T, M, N, L, C1).
+
+sublist([_ | T], M, N, L, C) :-
+    C1 is C + 1,
+    sublist(T, M, N, L, C1).
+    

@@ -1,0 +1,11 @@
+is_member([H|_], H).
+is_member([_|T], E) :-
+    is_member(T, E).
+
+transformSet([], []).
+transformSet([H | T], R) :-
+    is_member(T, H), !,
+    transformSet(T, R).
+
+transformSet([H | T], [H | R]) :-
+    transformSet(T, R).

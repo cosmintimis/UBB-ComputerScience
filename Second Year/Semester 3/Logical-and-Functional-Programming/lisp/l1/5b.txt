@@ -1,0 +1,14 @@
+
+;associationList(l1...ln, j1...jm) =
+; nil if n = 0
+; nil if m = 0
+; l1 U j1 U associationList(l2..ln,j2..jm)
+(defun associationList (l1 l2)
+    (cond
+      ((null l1) nil)
+      ((null l2) nil)
+      (T (cons (cons (car l1) (car l2)) (associationList (cdr l1) (cdr l2) )))
+    )
+)
+
+(print (associationList '(A B C) '(X Y Z)))
