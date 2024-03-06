@@ -1,3 +1,6 @@
+
+[Life After School Details](https://github.com/cosmintimis/UBB-ComputerScience/tree/main/First%20Year/Semester%202/Object-Oriented-Programming/labs/week4-5/a45-cosmintimis#life-after-school)
+
 # Assignment 08-09
 
 ## Requirements
