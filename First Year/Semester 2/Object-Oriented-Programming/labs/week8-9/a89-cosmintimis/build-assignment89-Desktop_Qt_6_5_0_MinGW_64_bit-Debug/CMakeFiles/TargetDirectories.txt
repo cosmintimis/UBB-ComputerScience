@@ -1,9 +1,0 @@
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/assignment89.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/install.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/assignment89_autogen_timestamp_deps.dir
-D:/facultate/year1sem2/oop/week89/a89-cosmintimis/build-assignment89-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/CMakeFiles/assignment89_autogen.dir
