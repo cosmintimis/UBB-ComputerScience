@@ -1,0 +1,16 @@
+SET TRAN ISOLATION LEVEL READ UNCOMMITTED
+BEGIN TRAN
+select * from Customer
+WAITFOR DELAY '00:00:15'
+select * from Customer
+ROLLBACK TRAN
+
+-- Solution
+-- READ COMMITTED
+
+-- SET TRAN ISOLATION LEVEL READ COMMITTED
+-- BEGIN TRAN
+-- select * from Customer
+-- WAITFOR DELAY '00:00:15'
+-- select * from Customer
+-- COMMIT TRAN

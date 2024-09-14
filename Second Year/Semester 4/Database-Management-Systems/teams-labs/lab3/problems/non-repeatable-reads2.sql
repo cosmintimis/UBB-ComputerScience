@@ -1,0 +1,13 @@
+SET TRAN ISOLATION LEVEL READ COMMITTED
+BEGIN TRAN
+select * from Customer
+WAITFOR DELAY '00:00:05'
+select * from Customer
+COMMIT TRAN
+
+-- SET TRAN ISOLATION LEVEL REPEATABLE READ
+-- BEGIN TRAN
+-- select * from Customer
+-- WAITFOR DELAY '00:00:10'
+-- select * from Customer
+-- COMMIT TRAN
