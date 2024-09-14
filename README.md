@@ -68,5 +68,20 @@ My University Journey
   </ul>
   <li>4<sup>th</sup> Semester</li>
   <ul>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%204/Artificial-Intelligence">Artificial Intelligence</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%204/Database-Management-Systems">Database Management Systems</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%204/Software-Engineering">Software Engineering</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%204/Systems-for-Design-and-Implementation">Systems for Design and Implementation</a>
+    </li>
+     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Second%20Year/Semester%204/Web-Programming">Web-Programming</a>
+    </li>
   </ul>
 </ul>
