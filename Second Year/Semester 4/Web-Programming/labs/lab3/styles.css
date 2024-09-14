@@ -1,0 +1,532 @@
+@font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.3a18e64a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.7a5673aa.woff) format('woff');
+    font-weight: 300;
+    font-style: 'normal';
+    font-display: 'swap';
+}
+
+@font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.80fda27a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.60b215ba.woff) format('woff');
+    font-weight: 400;
+    font-style: 'normal';
+    font-display: 'swap';
+}
+
+@font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.f8e2739a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.20fc288a.woff) format('woff');
+    font-weight: 500;
+    font-style: 'normal';
+    font-display: 'swap';
+}
+
+@font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.ebb56aba.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.a573679a.woff) format('woff');
+    font-weight: 700;
+    font-style: 'normal';
+    font-display: 'swap';
+}
+
+@font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.f44ae4ea.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.d70ec7ca.woff) format('woff');
+    font-weight: 800;
+    font-style: 'normal';
+    font-display: 'swap';
+}
+
+@font-face {
+    font-family: TwitterChirpExtendedHeavy;
+    src: url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff2) format('woff2'), url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff) format('woff');
+    font-weight: 800;
+    font-style: 'normal';
+    font-display: 'swap';
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("open-sans-500.woff2") format("woff2"), 
+         url("open-sans-500.woff") format("woff"); 
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+body {
+    background-color: black;
+    font-family: TwitterChirp;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.root{
+    height: calc(100vh - 72px);
+    display: flex;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: rgb(29, 155, 240);
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footer-text-area,
+.footer-text1,
+.footer-text2 {
+    color: white;
+    margin: 0;
+}
+
+.footer-text1 {
+    font-size: 23px;
+    line-height: 28px;
+    font-weight: 700;
+}
+
+.footer-text2 {
+    font-size: 15px;
+}
+
+.footer-btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-btn {
+    display: flex;
+    background-color: transparent;
+    min-height: 36px;
+    padding: 0px 16px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 9999px;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-btn a{
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.signup-btn-footer {
+    display: flex;
+    background-color: white;
+    min-height: 36px;
+    padding: 0px 16px;
+    cursor: pointer;
+    border: 1px solid rgb(239, 243, 244);
+    border-radius: 9999px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.signup-btn-footer a{
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+
+}
+
+.header-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 24px;
+    width: 275px;
+}
+
+.header-logo{
+    margin: 0;
+}
+
+.header-settings{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-settings-text{
+    color: rgb(231, 233, 234);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-left: 16px;
+}
+
+.content{
+   display: flex;
+   flex-direction: column;
+   max-width: 600px;
+   border-width: 0px 1px;
+   border-style: solid;
+   border-color: rgb(47, 51, 54);
+   width: 100%;
+}
+
+.top-content{
+    height: 53px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.twitter-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(231, 233, 234);
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.twitter-text p{
+    margin: 0;
+}
+
+.top-content-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 30px;
+}
+
+.twitter-text-additional-info{
+    color: rgb(113, 118, 123);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    margin: 0;
+    padding-top: 4px;
+
+}
+
+.main-content{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+
+.grey-background{
+    background-color: rgb(51, 54, 57);
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+    height: 200px;
+    width: 100%;
+}
+
+.twitter-image{
+    min-width: 48px;
+    position: absolute;
+    top: 125px;
+    left: 0px;
+    margin-left: 10px;
+}
+
+.twitter-image img{
+    width: 134px;
+    height: 134px;
+    border-radius: 9999px;
+    border: 4px solid black;
+}
+
+
+.follow-btn-div{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.follow-btn{
+    display: flex;
+    background-color: white;
+    min-height: 36px;
+    padding: 0px 16px;
+    cursor: pointer;
+    border: 1px solid rgb(239, 243, 244);
+    border-radius: 9999px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    margin-top: 12px;
+}
+
+.follow-btn p{
+    color: black;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.account-info{
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 24px);
+    height: calc(100% - 274px);
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 30px;
+    padding-left: 24px;
+}
+
+.account-description{
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.account-description a{
+    text-decoration: none;
+    color: rgb(29, 155, 240);
+}
+
+.account-create-date{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.account-info-text{
+    color: rgb(113, 118, 123);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 16px;
+    margin: 0;
+}
+
+.account-follow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.account-following{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-followers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+}
+
+.number-of-follow{
+    color: white;
+    font-size: 14px;
+    margin-right: 4px;
+}
+
+.account-posts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.account-posts-text{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 20px;
+
+}
+
+.account-posts-text p{
+    margin: 0;
+}
+
+.post-text1{
+    color: white;
+    font-size: 31px;
+    font-weight: 700;
+}
+
+.post-text2{
+    color: rgb(113, 118, 123);
+    font-size: 15px;
+    padding-top: 6px;
+
+}
+
+.post-text2 a{
+    text-decoration: none;
+    color: rgb(29, 155, 240);
+}
+
+.sidepanel{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+
+}
+
+.sidepanel-content{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.new-user-panel{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 16px;
+    border: 1px solid rgb(47, 51, 54);
+    margin-top: 10px;
+}
+
+.new-user-panel-header-text{
+    margin: 6px 12px;;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.new-user-panel-additional-text{
+    margin: 6px 12px;
+    color: rgb(113, 118, 123);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.signup-btn{
+    display: flex;
+    background-color: white;
+    cursor: pointer;
+    width: 300px;
+    height: 40px;
+    max-width: 400px;
+    border-radius: 20px;
+    min-width: min-content;
+    align-items: center;
+    justify-content: center;
+    margin: 6px 12px;
+
+}
+
+.signup-btn-google-text{
+    font-family: "Google Sans", arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    padding-left: 8px;
+    color: #3c4043;
+}
+
+.signup-btn-apple-text{
+    line-height: 20px;
+    font-weight: 700;
+    color: rgb(15,20,25);
+    padding-left: 4px;
+    font-size: 15px;
+}
+
+.signup-text-info{
+    color: rgb(113, 118, 123);
+    font-size: 13px;
+    font-weight: 400;
+    margin: 12px 12px;
+}
+.signup-text-info a{
+    text-decoration: none;
+    color: rgb(29, 155, 240);
+}
+
+.separator-line{
+    width: 100%;
+    height: 2px;
+    background-color: rgb(22,24,28);
+    margin: 16px 0px;
+}
+
+.trends-box{
+    width: 100%;
+    border-radius: 16px;
+    background-color: rgb(22,24,28);
+    border: 1px solid rgb(22,24,28);
+}
+
+.trends-box-text{
+    margin: 16px 32px 8px 32px;
+    padding-bottom: 50px;
+    padding-top: 10px;
+    font-size: 14px;
+    color: rgb(113, 118, 123);
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.other-links{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 12px 12px;
+}
+
+.other-links-item{
+    color: rgb(113, 118, 123);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.other-links-item p{
+    margin: 0;
+    padding-right: 12px;
+    padding-top: 8px;
+}
+
+.additional-svg-more{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

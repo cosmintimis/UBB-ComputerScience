@@ -1,0 +1,29 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+p{
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.centered-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 80vh;
+    margin: 10vh auto;
+    background-color: black; 
+    opacity: 0.2;
+    border-radius: 50%;
+}
+
+.centered-div:hover{
+    border-radius: 0%;
+}
+

@@ -1,0 +1,103 @@
+@model wpAspNet.ViewModels.MultimediaFileIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>MultimediaFiles</h1>
+
+<div>
+    <label for="genreDropdown">Select Genre:</label>
+    <select id="genreDropdown" class="form-control">
+        <option value="">All</option>
+        @foreach (var genre in Model.Genres)
+        {
+            <option value="@genre">@genre</option>
+        }
+    </select>
+</div>
+
+<div>
+    <label>Previously Selected Genre: <span id="previousSelectedGenre">None</span></label>
+</div>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MultimediaFiles.First().Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MultimediaFiles.First().FormatType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MultimediaFiles.First().Genre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MultimediaFiles.First().Path)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody id="multimediaTableBody">
+    @foreach (var item in Model.MultimediaFiles) {
+        <tr data-genre="@item.Genre">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormatType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Path)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dropdown = document.getElementById('genreDropdown');
+        var previousSelectedLabel = document.getElementById('previousSelectedGenre');
+        var previousSelectedGenre = "All";
+
+        dropdown.addEventListener('change', function () {
+            var selectedGenre = this.value;
+
+            /* 
+             var rows = document.querySelectorAll('#multimediaTableBody tr');
+            rows.forEach(row => {
+                 var genre = row.getAttribute('data-genre');
+                 if (selectedGenre === "" || genre === selectedGenre) {
+                     row.style.display = '';
+                 } else {
+                     row.style.display = 'none';
+                 }
+             });*/
+            console.log(selectedGenre);
+            fetch('/Files/ByGenre?genre=' + selectedGenre)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('multimediaTableBody').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+            previousSelectedLabel.textContent = previousSelectedGenre;
+            previousSelectedGenre = selectedGenre === "" ? "All" : selectedGenre;
+        });
+
+        previousSelectedLabel.textContent = previousSelectedGenre;
+        previousSelectedGenre = dropdown.value === "" ? "All" : dropdown.value;
+    });
+</script>

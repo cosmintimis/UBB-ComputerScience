@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{B9F86D6F-FC2A-4FFF-AFA8-939A8247AC0C}|https">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.wpLab12 PreferredExecutionTarget="/Applications/Google Chrome.app" FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="wpLab12/Program.cs">
+    <Files>
+      <File FileName="wpLab12/appsettings.json" Line="5" Column="15" />
+      <File FileName="wpLab12/Program.cs" Line="24" Column="5" />
+      <File FileName="wpLab12/Data/ApplicationDbContext.cs" Line="6" Column="54" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="wpLab12" expanded="True">
+            <Node name="wpLab12" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
+              <Node name="Data" expanded="True" />
+              <Node name="Views" expanded="True" />
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>

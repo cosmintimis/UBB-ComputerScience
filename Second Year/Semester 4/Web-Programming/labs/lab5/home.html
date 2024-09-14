@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab5</title>
+    <link rel="stylesheet" href="styles1.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/dark-hive/jquery-ui.css">
+    <script src=jquery-3.7.1.min.js></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    
+    <script>
+        $(
+            function(){
+                $("#dialog").dialog({
+                    autoOpen: false,
+                   // draggable: false,
+                    show: {
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    }
+                });
+
+                $(".my-btn").click(
+                    function(){
+                        $(".text").css("visibility", "visible");
+                        $("#dialog").dialog("open");
+                        
+                    }
+                );
+            }
+        );
+    </script>
+</head>
+<body>       
+    <button class="my-btn">Click me!</button>
+    <div id="dialog" title="Pietrosul Rodnei">
+        <p class="text"> Vârful Pietrosu este cel mai înalt pisc muntos din Munții Rodnei cu 2.303 metri. De asemenea, este cel mai înalt vârf din întregul lanț al Carpaților Orientali, fiind împărțit între județele Maramureș și Bistrița Năsăud.</p>
+    </div>
+</body>
+</html>

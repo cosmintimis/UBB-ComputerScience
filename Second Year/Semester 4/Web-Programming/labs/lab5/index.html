@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab5</title>
+    <link rel="stylesheet" href="styles2.css">
+    <script src=jquery-3.7.1.min.js></script>
+    <script>
+        $(
+            function () {
+                $(".my-btn").css("visibility", "visible");
+                $("#dialog").css("visibility", "visible");
+                $("#dialog").hide();
+                $(".my-btn").click(
+                    function () {
+                        $("#dialog").show(1000);
+                        $(".my-btn").css("display", "none");
+                    }
+                );
+                $("#dialog svg").click(
+                    function () {
+                        $("#dialog").hide(1000);
+                        $(".my-btn").css("display", "flex");
+                    }
+                );
+            
+            }
+        );
+    </script>
+</head>
+
+<body>
+    <button class="my-btn">Click me!</button>
+    <div id="dialog">
+
+        <div class="dialog-header">
+            <h2 class="dialog-title">Pietrosul Rodnei</h2>
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 50 50">
+                <path
+                    d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z">
+                </path>
+            </svg>
+        </div>
+        <p class="dialog-text">Vârful Pietrosu este cel mai înalt pisc muntos din Munții Rodnei cu 2.303 metri. De
+            asemenea,
+            este cel mai înalt vârf din întregul lanț al Carpaților Orientali, fiind împărțit între județele Maramureș
+            și Bistrița Năsăud.</p>
+    </div>
+</body>
+
+</html>
