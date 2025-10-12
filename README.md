@@ -85,3 +85,25 @@ My University Journey
     </li>
   </ul>
 </ul>
+
+### Third Year
+<ul>
+  <li>5<sup>th</sup> Semester</li>
+  <ul>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-5/Cloud-Applications-Architecture">Cloud Applications Architecture</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-5/Formal-Languages-and-Compiler-Design">Formal Languages and Compiler Design</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-5/Mobile-Applications">Mobile Applications</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/learning-go/tree/main/faculty_assignments">Parallel and Distributed Programming</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-5/Public-Key-Cryptography">Public Key Cryptography</a>
+    </li>
+  </ul>
+</ul>
