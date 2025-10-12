@@ -106,4 +106,22 @@ My University Journey
       <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-5/Public-Key-Cryptography">Public Key Cryptography</a>
     </li>
   </ul>
+  <li>6<sup>th</sup> Semester</li>
+  <ul>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-6/Design-Patterns">Design Patterns</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-6/History-of-Computer-Science">History of Computer Science</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-6/Numerical-Calculus">Numerical Calculus</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-6/Software-Systems-Verification-and-Validation">Software Systems Verification and Validation</a>
+    </li>
+    <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Third-Year/Semester-6/Understanding-and-Developing-Large-Language-Models">Understanding and Developing Large Language Models</a>
+    </li>
+  </ul>
 </ul>
