@@ -1,0 +1,178 @@
+lecture 8:
+The forecasting workflow
+Time series cross-validation
+Time series regression models
+
+Goodness of fit
+A commonly used function to see how well a linear model fits
+the set of training data is the R
+2
+. It can be computed in the
+following way:
+R
+2 =
+P(ˆyt − y¯)
+2
+P(yt − y¯)
+2
+where ¯y is the mean of the values from the training data.
+One way to interpret R
+2
+is to say that it measures the
+proportion of the variation in the forecast variable that is
+explained by the model.
+R
+2
+takes values between 0 and 1, the value 1 meaning perfect
+fit for the model. Since R
+2
+is defined on the train data, proper
+evaluation with test set and forecasts is needed.
+In R, the value of R
+2
+can be seen in the output of the report
+function.
+
+
+Fitted values and residuals
+Once you have built a model using some historical data, apply
+that model on the historical data (do 1 step forecasts for every
+possible period) → fitted values
+The difference between the actual value and the fitted value is
+the residual.
+
+Prediction intervals
+Forecasts always come with a prediction interval, which tells us
+how certain we are in the forecast. The point forecast is in
+general the middle point of the interval.
+In general, the larger the forecast horizon, the wider the
+prediction interval.
+Also, if we want higher certainty (for example 90% prediction
+interval instead of 80%) the prediction interval will be wider.
+
+
+Performance measures
+Scale dependent performance measures: MAE, RMSE
+Scale independent performance measures: MAPE, sMAPE,
+MASE
+
+
+The main idea of time series regression models is to forecast
+the value of a time series y assuming that it has a linear
+relationship with another time series x.
+We will then use the value of x (called the predictor variable)
+to forecast the value of y (the forecast variable).
+
+
+For finding the values of the coefficients β1, β2, etc. a method
+called least squares estimation is used. 
+
+We have talked about spurious correlation previously: the
+phenomenon that two time series are correlated (have a high
+correlation coefficient), simply because they have a similar
+trend.
+
+
+This situation can be handled by adding a dummy variable,
+which takes the values 0 (ex. for no) and 1 (for yes).
+
+If there are more than two possible values for the attribute, we
+need several dummy variables. More exactly, we need one less
+dummy variables than the number of possible values, since
+one of the values will be encoded with all zeros.
+
+
+A bad strategy is to create scatterplots of each possible
+predictor variable and the forecast variable and drop
+everything where no relationship can be seen. Sometimes the
+relationship cannot be identified from the plot.
+Another bad strategy is to build a model including all
+predictors and look at their p-values (in the output of the
+report function) and discard predictors with small p-values.
+A good approach is to use the the so-called measures of
+predictive accuracy, which can be seen using the glance
+function on a model.
+
+While R¯2
+is frequently used, it tends to find models with
+many predictors.
+AICc, AIC and CV are recommended to be used, since they
+have forecasting as their objective. If T is large enough, they
+will all lead to the same model.
+
+
+Lecture 9
+
+Exponential smoothing
+
+In time series regression models we assumed that we have (at
+least) two connected time series and used the values of one
+(of values of some) to build a model to forecast the values of
+the other.
+In other types of models we use past values of one single time
+series to build a model to predict the future values.
+
+Exponential smoothing includes methods that consider
+weighted averages of past observations to produce forecasts,
+with the weights decaying exponentially as the observations
+get older.
+It generates reliable forecasts, quickly and for a wide range of
+time series
+
+Simple exponential smoothing (SES)
+Suitable when there is no trend or season in data.
+For such time series up until now we only considered the naive
+and the mean benchmark methods.
+If you remember, the naive method assumed that all future
+values are equal to the last historical value. This is kind of a
+weighted average, when all weight is given to the last
+observation.
+Also the mean method considered that all future values are
+equal to the mean of the historical data. This is also kind of a
+weighted average where all historical data has the same
+weight.
+
+
+### Let’s now compare the performance of the three methods
+discussed up until now: SES, Holt’s method and the damped
+model.
+
+Some of them were discussed previously and have special
+names:
+(N, N) - simple exponential smoothing
+(A, N) - Holt’s linear method
+(Ad , N) - Additive damped trend methods
+(A, A) - Additive Holt-Winters’ method
+(A, M) - Multiplicative Holt-Winters’ method
+(Ad , M) - Holt-Winters’ damped method
+
+We can see that the best model is ETS(M, N, A), it has AIC
+226, AICc 228 and BIC 243.
+We have used this time series as an example at Holt-Winters’
+and we built an additive and a multiplicative model, with the
+following evaluation values:
+Additive: AIC 229, AICc 231 and BIC 250.
+Multiplicative: AIC 228, AICc 230 and BIC 245.
+Since all three measures should be minimized, we can see that
+the ETS(M, N, A) model is indeed a better fit.
+
+
+lecture 10
+ARIMA models
+
+Besides Exponential Smoothing, ARIMA models are the most
+widely used approaches for forecasting.
+While Exponential Smoothing focuses on describing the trend
+and seasonality in data, ARIMA models try to describe the
+autocorrelation in the data.
+
+
+While it looked stationary, the ACF and the ljung box tests
+show that the data is not white noise.
+
+The backward shifting operator, B, is useful when we are
+working with lags, it simply denotes the data shifted
+backwards a time unit.
+Byt = yt−1
+We can apply the operator twice:
+B(Byt) = B^(2)yt = yt−2
