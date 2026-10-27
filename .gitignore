@@ -1,1 +1,14 @@
 .DS_Store
+.idea/
+.vscode/
+.vs/
+*.iml
+__pycache__/
+*.pyc
+*.class
+*.o
+*.gcda
+*.gcno
+.gradle/
+build/
+out/
