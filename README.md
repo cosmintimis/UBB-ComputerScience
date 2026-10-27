@@ -135,6 +135,9 @@ My University Journey
   <li>1<sup>st</sup> Semester</li>
   <ul>
     <li>
+      <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Master/First-Year/Semester-1/Business-Forecasting-and-Predictive-Modelling">Business Forecasting and Predictive Modelling</a>
+    </li>
+    <li>
       <a href="https://github.com/cosmintimis/UBB-ComputerScience/tree/main/Master/First-Year/Semester-1/Cloud-Databases">Cloud Databases</a>
     </li>
     <li>

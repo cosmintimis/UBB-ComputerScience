@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LZW Decoding Visualizer (Special Case)</title>
+    <style>
+      :root {
+        --bg-color: #f4f4f9;
+        --card-bg: #ffffff;
+        --primary: #3b82f6;
+        --highlight: #f59e0b;
+        --special: #ef4444;
+        --text: #1f2937;
+        --border: #e5e7eb;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text);
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+      }
+      p {
+        color: #666;
+        max-width: 600px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 20px;
+        max-width: 1000px;
+        width: 100%;
+      }
+
+      /* Card Styles */
+      .card {
+        background: var(--card-bg);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border: 1px solid var(--border);
+      }
+
+      /* Input Sequence */
+      .input-sequence {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        padding: 10px;
+        background: #eee;
+        border-radius: 4px;
+      }
+
+      .code-box {
+        padding: 8px 12px;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: monospace;
+        font-weight: bold;
+      }
+
+      .code-box.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        transform: scale(1.1);
+      }
+
+      /* Dictionary Table */
+      .dict-container {
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        background: #f9fafb;
+        position: sticky;
+        top: 0;
+      }
+
+      tr.new-entry {
+        background-color: #d1fae5;
+        animation: flash 1s;
+      }
+
+      /* Variable State */
+      .state-display {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .var-box {
+        background: #f8fafc;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+      }
+
+      .var-label {
+        font-size: 0.8em;
+        color: #666;
+        text-transform: uppercase;
+      }
+      .var-value {
+        font-size: 1.2em;
+        font-family: monospace;
+        font-weight: bold;
+      }
+
+      /* Output */
+      .output-box {
+        font-family: monospace;
+        font-size: 1.5em;
+        padding: 15px;
+        background: #111;
+        color: #0f0;
+        border-radius: 4px;
+        min-height: 40px;
+        word-break: break-all;
+      }
+
+      /* Controls & Logs */
+      .controls {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+      }
+
+      #btn-next {
+        background-color: var(--primary);
+        color: white;
+      }
+      #btn-next:hover {
+        background-color: #2563eb;
+      }
+      #btn-next:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      #btn-reset {
+        background-color: #ef4444;
+        color: white;
+      }
+      #btn-reset:hover {
+        background-color: #dc2626;
+      }
+
+      .log-box {
+        margin-top: 15px;
+        padding: 10px;
+        background: #fffbeb;
+        border-left: 4px solid var(--highlight);
+        font-size: 0.95em;
+        min-height: 40px;
+      }
+
+      .special-case-alert {
+        background-color: #fee2e2;
+        border-left-color: var(--special);
+        color: #991b1b;
+        font-weight: bold;
+      }
+
+      @keyframes flash {
+        0% {
+          background-color: #86efac;
+        }
+        100% {
+          background-color: #d1fae5;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>LZW Decoding Visualizer</h1>
+    <p>
+      Visualize how the dictionary grows and how the "Special Case" (Code not
+      found) is handled.
+    </p>
+
+    <div class="container">
+      <div class="card dict-container">
+        <h3>Dictionary (>255)</h3>
+        <table id="dict-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>String</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div
+          style="
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 10px;
+            text-align: center;
+          "
+        >
+          (Codes 0-255 are initialized to ASCII)
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Input Sequence</h3>
+        <div class="input-sequence" id="input-display"></div>
+
+        <div class="state-display">
+          <div class="var-box">
+            <div class="var-label">Old Code</div>
+            <div class="var-value" id="val-old">null</div>
+          </div>
+          <div class="var-box">
+            <div class="var-label">Current Code</div>
+            <div class="var-value" id="val-curr">null</div>
+          </div>
+          <div class="var-box">
+            <div class="var-label">Extracted String (S)</div>
+            <div class="var-value" id="val-s">""</div>
+          </div>
+          <div class="var-box">
+            <div class="var-label">First Char (c)</div>
+            <div class="var-value" id="val-c">""</div>
+          </div>
+        </div>
+
+        <h3>Decoded Output</h3>
+        <div class="output-box" id="output-display"></div>
+
+        <div class="log-box" id="status-log">
+          Click "Step" to start decoding.
+        </div>
+
+        <div class="controls">
+          <button id="btn-next" onclick="visualizer.step()">Step</button>
+          <button id="btn-reset" onclick="visualizer.reset()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      class LZWVisualizer {
+        constructor() {
+          // The classic Special Case input:
+          // A (65), B (66), AB (256), ABA (258)
+          // Note: 258 is requested before it is technically finished being added in some encoder timings,
+          // triggering the special case in the decoder.
+          this.defaultInput = [65, 66, 256, 258];
+
+          this.dictionary = new Map();
+          this.reset();
+        }
+
+        reset() {
+          this.dictionary.clear();
+          // Initialize 0-255
+          for (let i = 0; i < 256; i++) {
+            this.dictionary.set(i, String.fromCharCode(i));
+          }
+
+          this.input = [...this.defaultInput];
+          this.output = "";
+          this.stepIndex = 0; // Index in input array
+          this.nextDictCode = 256;
+          this.oldCode = null;
+          this.finished = false;
+
+          // UI Reset
+          document
+            .getElementById("dict-table")
+            .querySelector("tbody").innerHTML = "";
+          document.getElementById("output-display").innerText = "";
+          document.getElementById("val-old").innerText = "null";
+          document.getElementById("val-curr").innerText = "null";
+          document.getElementById("val-s").innerText = '""';
+          document.getElementById("val-c").innerText = '""';
+          document.getElementById("status-log").innerText =
+            "Ready. Input sequence loaded: " + this.input.join(", ");
+          document.getElementById("status-log").className = "log-box";
+          document.getElementById("btn-next").disabled = false;
+
+          this.renderInput();
+        }
+
+        renderInput() {
+          const container = document.getElementById("input-display");
+          container.innerHTML = "";
+          this.input.forEach((code, idx) => {
+            const div = document.createElement("div");
+            div.className = "code-box";
+            div.innerText = code;
+            div.id = `input-${idx}`;
+            container.appendChild(div);
+          });
+        }
+
+        log(msg, isSpecial = false) {
+          const logEl = document.getElementById("status-log");
+          logEl.innerText = msg;
+          if (isSpecial) {
+            logEl.classList.add("special-case-alert");
+          } else {
+            logEl.classList.remove("special-case-alert");
+          }
+        }
+
+        step() {
+          if (this.finished) return;
+
+          // Highlight current input
+          document
+            .querySelectorAll(".code-box")
+            .forEach((b) => b.classList.remove("active"));
+          const currentBox = document.getElementById(`input-${this.stepIndex}`);
+          if (currentBox) currentBox.classList.add("active");
+
+          const newCode = this.input[this.stepIndex];
+
+          // Update UI variables
+          document.getElementById("val-curr").innerText = newCode;
+          document.getElementById("val-old").innerText =
+            this.oldCode !== null ? this.oldCode : "null";
+
+          // --- ALGORITHM LOGIC ---
+
+          // FIRST STEP
+          if (this.oldCode === null) {
+            const string = this.dictionary.get(newCode);
+            this.output += string;
+
+            this.log(`First code ${newCode} found: "${string}". Outputting.`);
+
+            // UI Update
+            document.getElementById("val-s").innerText = `"${string}"`;
+            document.getElementById("val-c").innerText = `"${string[0]}"`;
+            document.getElementById("output-display").innerText = this.output;
+
+            this.oldCode = newCode;
+            this.stepIndex++;
+            return;
+          }
+
+          // SUBSEQUENT STEPS
+          let s;
+          let isSpecialCase = false;
+
+          if (this.dictionary.has(newCode)) {
+            // Standard Case
+            s = this.dictionary.get(newCode);
+            this.log(`Code ${newCode} found in dictionary: "${s}".`);
+          } else {
+            // SPECIAL CASE
+            // If code is not in dictionary, it must be (oldString + oldString[0])
+            isSpecialCase = true;
+            const oldString = this.dictionary.get(this.oldCode);
+            s = oldString + oldString.charAt(0);
+            this.log(
+              `SPECIAL CASE! Code ${newCode} not in dict. Guessing: "${oldString}" + "${oldString[0]}" = "${s}"`,
+              true,
+            );
+          }
+
+          // Output S
+          document.getElementById("output-display").innerText = this.output + s; // Preview output
+          this.output += s;
+          document.getElementById("val-s").innerText = `"${s}"`;
+
+          // Add to Dictionary: OldString + FirstChar of CurrentString
+          const oldString = this.dictionary.get(this.oldCode);
+          const charC = s.charAt(0);
+          document.getElementById("val-c").innerText = `"${charC}"`;
+
+          const newEntry = oldString + charC;
+          this.dictionary.set(this.nextDictCode, newEntry);
+
+          // Update Dictionary UI
+          this.addDictRow(this.nextDictCode, newEntry);
+
+          if (!isSpecialCase) {
+            this.log(
+              `Output "${s}". Added ${this.nextDictCode}: "${newEntry}" to dict.`,
+            );
+          }
+
+          // Advance
+          this.oldCode = newCode;
+          this.nextDictCode++;
+          this.stepIndex++;
+
+          if (this.stepIndex >= this.input.length) {
+            this.finished = true;
+            document.getElementById("btn-next").disabled = true;
+            document.getElementById("btn-next").innerText = "Finished";
+            this.log("Decoding complete.");
+          }
+        }
+
+        addDictRow(code, str) {
+          const tbody = document
+            .getElementById("dict-table")
+            .querySelector("tbody");
+          const row = document.createElement("tr");
+          row.className = "new-entry";
+          row.innerHTML = `<td>${code}</td><td>${str}</td>`;
+          tbody.prepend(row); // Add to top to see latest
+        }
+      }
+
+      const visualizer = new LZWVisualizer();
+    </script>
+  </body>
+</html>
